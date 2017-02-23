@@ -15,4 +15,8 @@ end
 File.open("commands_history.json", "w") do |f|
   f.write(commands_data.to_json)
 end
-
+data = File.read('commands_history.json')
+file_contents = File.read('commands_history_chart.js')
+file_contents.gsub!(/var commandsHistory;/, 'var commandsHistory = ' + data + ';')
+File.write('commands_history_chart.js', file_contents)
+system("/usr/bin/open -a '/Applications/Google Chrome.app' commands_history_chart.html")
