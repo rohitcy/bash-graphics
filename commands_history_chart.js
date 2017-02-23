@@ -25,15 +25,15 @@ var initChart = function(){
                 style: {
                     color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                 }
-            }
+            },
+            size: 300
         }
     },
     series: [{
                 name: 'Count',
                 colorByPoint: true,
                 data: chartData
-            }],
-    size: 500
+            }]
 });
 };
 

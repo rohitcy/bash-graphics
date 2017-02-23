@@ -1,9 +1,20 @@
 require 'json'
-history_file = File.open(ENV['HOME'] + '/.bash_history')
+shell_type = (`echo $SHELL`).split("/").last.chomp
+history_file = File.open(ENV['HOME'] + "/.#{shell_type}_history")
 commands = []
-File.read(ENV['HOME'] + '/.bash_history').split("\n").each do |command|
-  commands << command.split(" ").first
+if shell_type.eql?("zsh")
+  File.read(history_file).split(";").each do |command|
+    commands << command.split(" ").first
+  end
+elsif shell_type.eql?("bash")
+  File.read(history_file).split("\n").each do |command|
+    commands << command.split(" ").first
+  end
+else
+  puts "Only zsh and bash are supported for now."
+  exit
 end
+commands = commands.compact
 commands_data = []
 unique_commands = commands.uniq.sort
 unique_commands.each do |command|
